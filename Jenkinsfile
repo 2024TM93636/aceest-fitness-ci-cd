@@ -1,21 +1,23 @@
 pipeline {
-    agent {
-        docker {
-            image 'python:3.14'
-        }
-    }
+    agent any
 
     stages {
 
+        stage('Check Python') {
+            steps {
+                sh 'python3 --version'
+            }
+        }
+
         stage('Install Dependencies') {
             steps {
-                sh 'pip install -r requirements.txt'
+                sh 'python3 -m pip install -r requirements.txt'
             }
         }
 
         stage('Run Tests') {
             steps {
-                sh 'pytest'
+                sh 'python3 -m pytest'
             }
         }
 
