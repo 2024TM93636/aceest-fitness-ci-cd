@@ -1,8 +1,8 @@
 pipeline {
     agent {
         docker {
-            image 'python:3.9'
-            args '-u root'
+            image 'python:3.11'
+            args '-v /var/run/docker.sock:/var/run/docker.sock'
         }
     }
 

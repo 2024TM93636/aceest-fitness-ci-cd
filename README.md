@@ -1,5 +1,13 @@
 # ACEest Fitness & Gym API – DevOps CI/CD Project
 
+![CI Pipeline](https://github.com/2024TM93636/aceest-fitness-ci-cd/actions/workflows/ci.yml/badge.svg)
+![Python](https://img.shields.io/badge/Python-3.10-blue)
+![Flask](https://img.shields.io/badge/Flask-API-black)
+![Docker](https://img.shields.io/badge/Docker-Container-blue)
+![Pytest](https://img.shields.io/badge/Tests-Pytest-green)
+
+A Flask-based REST API demonstrating DevOps practices including automated testing, Docker containerization, and CI pipelines using GitHub Actions.
+
 ## Project Overview
 
 This project demonstrates a simple **Flask-based REST API** for a fitness and gym management system integrated with a complete **DevOps CI pipeline**.
