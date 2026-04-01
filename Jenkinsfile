@@ -26,6 +26,15 @@ pipeline {
             }
         }
 
+        stage('Install Docker CLI') {
+            steps {
+                sh '''
+                apt-get update
+                apt-get install -y docker.io
+                '''
+            }
+        }
+
         stage('Build Docker Image') {
             steps {
                 sh 'docker --version'
