@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ACEest Gym Dashboard</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<h1>🏋️ ACEest Gym Dashboard</h1>
+
+<div class="grid">
+
+    <!-- Add Member -->
+    <div class="card">
+        <h3>Add Member</h3>
+        <input id="name" placeholder="Name">
+        <input id="age" type="number" placeholder="Age">
+        <input id="plan" placeholder="Plan (Basic / Premium)">
+        <button onclick="addMember()">Add</button>
+        <p id="message"></p>
+    </div>
+
+    <!-- Search -->
+    <div class="card">
+        <h3>Search</h3>
+        <input id="searchName" placeholder="Search name">
+        <button onclick="searchMember()">Go</button>
+        <ul id="searchResults"></ul>
+    </div>
+
+    <!-- Add Workout -->
+    <div class="card">
+        <h3>Add Workout</h3>
+        <input id="wtitle" placeholder="Title">
+        <input id="difficulty" placeholder="Difficulty">
+        <button onclick="addWorkout()">Add</button>
+        <p id="wmessage"></p>
+    </div>
+
+    <!-- Members -->
+    <div class="card list-card">
+        <h3>Members</h3>
+        <ul id="members"></ul>
+    </div>
+
+    <!-- Workouts -->
+    <div class="card list-card">
+        <h3>Workouts</h3>
+        <ul id="workouts"></ul>
+    </div>
+
+</div>
+
+<script>
+
+// -------- MEMBER --------
+
+async function addMember() {
+    const name = document.getElementById("name").value;
+    const age = document.getElementById("age").value;
+    const plan = document.getElementById("plan").value;
+
+    if (!name || !age || !plan) {
+        document.getElementById("message").innerText = "⚠️ All fields required";
+        return;
+    }
+
+    const res = await fetch("/api/members", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({name, age, plan})
+    });
+
+    if (res.ok) {
+        document.getElementById("message").innerText = "✅ Member added!";
+        document.getElementById("name").value = "";
+        document.getElementById("age").value = "";
+        document.getElementById("plan").value = "";
+        loadMembers();
+    }
+}
+
+async function loadMembers() {
+    const res = await fetch("/api/members");
+    const data = await res.json();
+
+    const list = document.getElementById("members");
+    list.innerHTML = "";
+
+    data.forEach((m) => {
+        const li = document.createElement("li");
+
+        li.innerHTML = `
+            <b>${m.name}</b> (${m.plan})
+            <button onclick="deleteMember('${m.id}')">❌</button>
+        `;
+
+        list.appendChild(li);
+    });
+}
+
+async function deleteMember(id) {
+    await fetch(`/api/members/${id}`, {
+        method: "DELETE"
+    });
+    loadMembers();
+}
+
+// -------- WORKOUT --------
+
+async function addWorkout() {
+    const title = document.getElementById("wtitle").value;
+    const difficulty = document.getElementById("difficulty").value;
+
+    if (!title || !difficulty) {
+        document.getElementById("wmessage").innerText = "⚠️ All fields required";
+        return;
+    }
+
+    const res = await fetch("/api/workouts", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({title, difficulty})
+    });
+
+    if (res.ok) {
+        document.getElementById("wtitle").value = "";
+        document.getElementById("difficulty").value = "";
+        loadWorkouts();
+    }
+}
+
+async function loadWorkouts() {
+    const res = await fetch("/api/workouts");
+    const data = await res.json();
+
+    const list = document.getElementById("workouts");
+    list.innerHTML = "";
+
+    data.forEach((w) => {
+        const li = document.createElement("li");
+        li.innerText = `${w.title} (${w.difficulty})`;
+        list.appendChild(li);
+    });
+}
+
+// -------- SEARCH --------
+
+async function searchMember() {
+    const name = document.getElementById("searchName").value;
+
+    const res = await fetch(`/api/members/search?name=${name}`);
+    const data = await res.json();
+
+    const list = document.getElementById("searchResults");
+    list.innerHTML = "";
+
+    data.forEach(m => {
+        const li = document.createElement("li");
+        li.innerText = `${m.name} (${m.plan})`;
+        list.appendChild(li);
+    });
+}
+
+// INIT
+loadMembers();
+loadWorkouts();
+
+</script>
+
+</body>
+</html>

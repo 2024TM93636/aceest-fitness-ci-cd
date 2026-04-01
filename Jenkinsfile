@@ -26,19 +26,19 @@ pipeline {
             }
         }
 
-        stage('Install Docker CLI') {
+        stage('Build Docker Image') {
             steps {
-                sh '''
-                apt-get update
-                apt-get install -y docker.io
-                '''
+                sh 'docker build -t aceest-gym .'
             }
         }
 
-        stage('Build Docker Image') {
+        stage('Deploy Container') {
             steps {
-                sh 'docker --version'
-                sh 'docker build -t aceest-gym .'
+                sh '''
+                docker stop aceest-container || true
+                docker rm aceest-container || true
+                docker run -d -p 5000:5000 --name aceest-container aceest-gym
+                '''
             }
         }
     }

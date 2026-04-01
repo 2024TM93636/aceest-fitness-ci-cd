@@ -8,122 +8,126 @@
 
 A Flask-based REST API demonstrating DevOps practices including automated testing, Docker containerization, and CI pipelines using GitHub Actions.
 
-## Project Overview
+## Overview
 
-This project demonstrates a simple **Flask-based REST API** for a fitness and gym management system integrated with a complete **DevOps CI pipeline**.
+This project demonstrates the implementation of a **complete DevOps CI/CD pipeline** for a Flask-based Fitness & Gym Management API.
 
-The application is containerized using **Docker** and automatically tested and built through a CI workflow implemented using **GitHub Actions**.
+The solution covers the full lifecycle:
 
-The project showcases essential DevOps practices including:
-
+- Application development
 - Version control
 - Automated testing
 - Containerization
-- Continuous Integration (CI)
+- Continuous Integration (GitHub Actions)
+- Continuous Build & Deployment (Jenkins)
+
+The primary goal is to ensure **code quality, consistency, and automated delivery**.
 
 ---
 
-## Technologies Used
+## Features
 
-| Technology     | Purpose                 |
-| -------------- | ----------------------- |
-| Python         | Application development |
-| Flask          | REST API framework      |
-| Pytest         | Unit testing framework  |
-| Git            | Version control         |
-| GitHub         | Code repository         |
-| Docker         | Containerization        |
-| GitHub Actions | Continuous Integration  |
+- REST API for managing gym members
+- Add and retrieve members
+- Lightweight Flask-based backend
+- Fully containerized application
+- Automated testing with Pytest
+- CI pipeline using GitHub Actions
+- Jenkins-based build and deployment pipeline
+
+---
+
+## Tech Stack
+
+| Category         | Technology              |
+| ---------------- | ----------------------- |
+| Backend          | Python, Flask           |
+| Testing          | Pytest                  |
+| Containerization | Docker                  |
+| CI/CD            | GitHub Actions, Jenkins |
+| Version Control  | Git, GitHub             |
 
 ---
 
 ## Project Structure
 
 ```
-aceest-fitness-ci-cd
+aceest-fitness-ci-cd/
 │
-├── app.py
-├── requirements.txt
-├── Dockerfile
-├── .gitignore
+├── app.py                  # Flask API
+├── requirements.txt        # Dependencies
+├── Dockerfile              # Container configuration
+├── Jenkinsfile             # CI/CD pipeline (Jenkins)
 ├── README.md
 │
-├── tests
-│   └── test_app.py
+├── tests/
+│   └── test_app.py         # Unit tests
 │
-└── .github
-    └── workflows
-        └── ci.yml
+└── .github/
+    └── workflows/
+        └── ci.yml          # GitHub Actions pipeline
 ```
 
 ---
 
-## CI/CD Architecture Diagram
+## API Endpoints
 
-```mermaid
-flowchart LR
+### 1. Home
 
-Dev[Developer] -->|git push| GH[GitHub Repository]
+```
+GET /
+```
 
-GH --> GA[GitHub Actions CI Pipeline]
+Response:
 
-GA --> T[Run Pytest Tests]
-
-GA --> D[Build Docker Image]
-
-D --> C[Docker Container]
-
-C --> API[Flask API Service]
-
-API --> U[End Users / Browser]
+```json
+{
+  "message": "Welcome to ACEest Fitness & Gym API"
+}
 ```
 
 ---
 
-## CI Pipeline Workflow
-
-The CI pipeline automatically runs when code is pushed to the repository.
-
-Pipeline stages include:
-
-1. **Checkout Repository**
-   Downloads the latest source code.
-
-2. **Setup Python Environment**
-   Configures Python runtime for the pipeline.
-
-3. **Install Dependencies**
+### 2. Get Members
 
 ```
-pip install -r requirements.txt
+GET /members
 ```
-
-4. **Run Unit Tests**
-
-```
-pytest
-```
-
-5. **Build Docker Image**
-
-```
-docker build -t aceest-gym .
-```
-
-If all steps succeed, the build passes successfully.
 
 ---
 
-## Running the Application Locally
+### 3. Add Member
 
-### 1. Clone the Repository
+```
+POST /members
+```
+
+Request:
+
+```json
+{
+  "name": "John"
+}
+```
+
+Response:
+
+```json
+{
+  "message": "Member added successfully"
+}
+```
+
+---
+
+## Local Setup
+
+### 1. Clone Repository
 
 ```
 git clone https://github.com/2024TM93636/aceest-fitness-ci-cd.git
 cd aceest-fitness-ci-cd
 ```
-
----
 
 ### 2. Install Dependencies
 
@@ -131,37 +135,13 @@ cd aceest-fitness-ci-cd
 pip install -r requirements.txt
 ```
 
----
-
-### 3. Run the Flask Application
+### 3. Run Application
 
 ```
 python app.py
 ```
 
-Open browser:
-
-```
-http://localhost:5000
-```
-
----
-
-## Running the Application Using Docker
-
-Build the Docker image:
-
-```
-docker build -t aceest-gym .
-```
-
-Run the container:
-
-```
-docker run -p 5000:5000 aceest-gym
-```
-
-Access the application:
+Access:
 
 ```
 http://localhost:5000
@@ -171,33 +151,101 @@ http://localhost:5000
 
 ## Running Tests
 
-Execute unit tests using:
-
 ```
 pytest
 ```
 
 ---
 
-## Example API Response
+## Docker Setup
 
-Accessing the root endpoint returns:
+### Build Image
 
 ```
-{
-  "message": "Welcome to ACEest Fitness & Gym API"
-}
+docker build -t aceest-gym .
+```
+
+### Run Container
+
+```
+docker run -p 5000:5000 aceest-gym
 ```
 
 ---
 
-## DevOps Practices Demonstrated
+## CI/CD Pipelines
 
-- Source code management with Git
-- Automated CI pipeline
-- Containerization using Docker
-- Automated testing with Pytest
-- Cloud-based CI execution with GitHub Actions
+### GitHub Actions (Continuous Integration)
+
+Triggered on every push to `main`.
+
+Steps:
+
+1. Checkout code
+2. Setup Python
+3. Install dependencies
+4. Run tests
+5. Build Docker image
+
+---
+
+### Jenkins Pipeline (Build & Deployment)
+
+The Jenkins pipeline performs:
+
+1. Environment setup using Docker agent
+2. Dependency installation
+3. Test execution
+4. Docker image build
+5. Container deployment
+
+This ensures:
+
+- Code validation
+- Build consistency
+- Automated deployment
+
+---
+
+## CI/CD Workflow Diagram
+
+```mermaid
+flowchart LR
+
+Dev[Developer] -->|Push Code| GH[GitHub]
+
+GH --> GA[GitHub Actions CI]
+GA --> Test[Run Tests]
+GA --> Build[Build Docker Image]
+
+GH --> Jenkins[Jenkins Pipeline]
+Jenkins --> Deploy[Deploy Container]
+
+Deploy --> App[Flask App Running]
+App --> User[End User]
+```
+
+---
+
+## DevOps Practices Implemented
+
+- Version control with structured commits
+- Automated testing (shift-left testing)
+- Containerized application deployment
+- Continuous Integration (CI)
+- Continuous Build & Deployment (CD)
+- Infrastructure as Code (Dockerfile, Jenkinsfile, YAML)
+
+---
+
+## Improvements & Future Enhancements
+
+- Add database integration (e.g., PostgreSQL)
+- Input validation for API
+- Authentication & authorization
+- Logging and monitoring
+- Docker image optimization using multi-stage builds
+- Kubernetes deployment
 
 ---
 
