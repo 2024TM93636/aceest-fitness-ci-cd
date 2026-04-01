@@ -5,35 +5,38 @@
 ![Flask](https://img.shields.io/badge/Flask-API-black)
 ![Docker](https://img.shields.io/badge/Docker-Container-blue)
 ![Pytest](https://img.shields.io/badge/Tests-Pytest-green)
+![Jenkins](http://localhost:8080/job/aceest-fitness-ci-cd/badge/icon)
 
-A Flask-based REST API demonstrating DevOps practices including automated testing, Docker containerization, and CI pipelines using GitHub Actions.
+A Flask-based Fitness & Gym Management API demonstrating modern **DevOps practices**, including automated testing, Docker containerization, and CI/CD pipelines with **GitHub Actions** and **Jenkins**.
+
+---
 
 ## Overview
 
-This project demonstrates the implementation of a **complete DevOps CI/CD pipeline** for a Flask-based Fitness & Gym Management API.
+This project implements a **complete DevOps lifecycle** for a fitness application:
 
-The solution covers the full lifecycle:
+1. Local development with Python & Flask
+2. Version control using Git & GitHub
+3. Unit testing with Pytest
+4. Containerization with Docker
+5. Continuous Integration via GitHub Actions
+6. Continuous Build & Deployment via Jenkins
 
-- Application development
-- Version control
-- Automated testing
-- Containerization
-- Continuous Integration (GitHub Actions)
-- Continuous Build & Deployment (Jenkins)
-
-The primary goal is to ensure **code quality, consistency, and automated delivery**.
+The goal is to ensure **code quality, environmental consistency, and automated delivery**.
 
 ---
 
 ## Features
 
-- REST API for managing gym members
-- Add and retrieve members
-- Lightweight Flask-based backend
-- Fully containerized application
-- Automated testing with Pytest
-- CI pipeline using GitHub Actions
-- Jenkins-based build and deployment pipeline
+- REST API for **managing gym members and workouts**
+- **CRUD operations**: Create, Read, Update, Delete members
+- Assign workouts to members
+- Search members by name
+- **Interactive web dashboard** (HTML + JS + CSS)
+- Fully **containerized application** with Docker
+- Automated **unit testing** with Pytest
+- **CI/CD pipelines** using GitHub Actions and Jenkins
+- Automated container **deployment** via Jenkins
 
 ---
 
@@ -42,6 +45,7 @@ The primary goal is to ensure **code quality, consistency, and automated deliver
 | Category         | Technology              |
 | ---------------- | ----------------------- |
 | Backend          | Python, Flask           |
+| Frontend         | HTML, CSS, JavaScript   |
 | Testing          | Pytest                  |
 | Containerization | Docker                  |
 | CI/CD            | GitHub Actions, Jenkins |
@@ -54,69 +58,59 @@ The primary goal is to ensure **code quality, consistency, and automated deliver
 ```
 aceest-fitness-ci-cd/
 │
-├── app.py                  # Flask API
-├── requirements.txt        # Dependencies
-├── Dockerfile              # Container configuration
-├── Jenkinsfile             # CI/CD pipeline (Jenkins)
+├── app.py                  # Flask API logic
+├── requirements.txt        # Python dependencies
+├── Dockerfile              # Docker container configuration
+├── Jenkinsfile             # Jenkins CI/CD pipeline
 ├── README.md
 │
+├── static/
+│   └── style.css           # Dashboard styling
+├── templates/
+│   └── index.html          # Dashboard HTML
+│
 ├── tests/
-│   └── test_app.py         # Unit tests
+│   └── test_app.py         # Pytest unit tests
 │
 └── .github/
     └── workflows/
-        └── ci.yml          # GitHub Actions pipeline
+        └── ci.yml          # GitHub Actions CI workflow
 ```
 
 ---
 
 ## API Endpoints
 
-### 1. Home
+### Home
 
 ```
 GET /
 ```
 
-Response:
-
-```json
-{
-  "message": "Welcome to ACEest Fitness & Gym API"
-}
-```
+Renders the **web dashboard**.
 
 ---
 
-### 2. Get Members
+### Members
 
-```
-GET /members
-```
+| Method | Endpoint                    | Description            |
+| ------ | --------------------------- | ---------------------- |
+| GET    | `/api/members`              | List all members       |
+| GET    | `/api/members/<member_id>`  | Get a member by ID     |
+| POST   | `/api/members`              | Add a new member       |
+| PUT    | `/api/members/<member_id>`  | Update member details  |
+| DELETE | `/api/members/<member_id>`  | Delete a member        |
+| GET    | `/api/members/search?name=` | Search members by name |
 
 ---
 
-### 3. Add Member
+### Workouts
 
-```
-POST /members
-```
-
-Request:
-
-```json
-{
-  "name": "John"
-}
-```
-
-Response:
-
-```json
-{
-  "message": "Member added successfully"
-}
-```
+| Method | Endpoint                                       | Description                  |
+| ------ | ---------------------------------------------- | ---------------------------- |
+| GET    | `/api/workouts`                                | List all workouts            |
+| POST   | `/api/workouts`                                | Add a new workout            |
+| POST   | `/api/members/<member_id>/assign/<workout_id>` | Assign a workout to a member |
 
 ---
 
@@ -141,7 +135,7 @@ pip install -r requirements.txt
 python app.py
 ```
 
-Access:
+Access the dashboard:
 
 ```
 http://localhost:5000
@@ -154,6 +148,9 @@ http://localhost:5000
 ```
 pytest
 ```
+
+- All unit tests are located in `tests/test_app.py`
+- Tests cover **members CRUD**, **workouts CRUD**, **assignment**, and **search**.
 
 ---
 
@@ -168,8 +165,10 @@ docker build -t aceest-gym .
 ### Run Container
 
 ```
-docker run -p 5000:5000 aceest-gym
+docker run -d -p 5000:5000 --name aceest-container aceest-gym
 ```
+
+- Stops and removes the container automatically if redeployed via Jenkins.
 
 ---
 
@@ -177,33 +176,33 @@ docker run -p 5000:5000 aceest-gym
 
 ### GitHub Actions (Continuous Integration)
 
-Triggered on every push to `main`.
+Triggered on every push or pull request to `main`.
 
 Steps:
 
-1. Checkout code
-2. Setup Python
+1. Checkout repository
+2. Set up Python environment
 3. Install dependencies
-4. Run tests
+4. Run Pytest for automated testing
 5. Build Docker image
+
+**Status badge** above shows the latest CI run.
 
 ---
 
 ### Jenkins Pipeline (Build & Deployment)
 
-The Jenkins pipeline performs:
+- Uses a **Docker agent** for environment consistency
+- Installs dependencies
+- Runs Pytest unit tests
+- Builds Docker image
+- Deploys the container to port 5000
 
-1. Environment setup using Docker agent
-2. Dependency installation
-3. Test execution
-4. Docker image build
-5. Container deployment
-
-This ensures:
+Ensures:
 
 - Code validation
-- Build consistency
-- Automated deployment
+- Build reproducibility
+- Automated deployment to a local container
 
 ---
 
@@ -227,32 +226,41 @@ App --> User[End User]
 
 ---
 
-## DevOps Practices Implemented
+## Dashboard Screenshot
 
-- Version control with structured commits
-- Automated testing (shift-left testing)
-- Containerized application deployment
-- Continuous Integration (CI)
-- Continuous Build & Deployment (CD)
-- Infrastructure as Code (Dockerfile, Jenkinsfile, YAML)
+**Home Dashboard**  
+![Home Dashboard](screenshots/dashboard.png)
 
 ---
 
-## Improvements & Future Enhancements
+## DevOps Practices Implemented
 
-- Add database integration (e.g., PostgreSQL)
-- Input validation for API
-- Authentication & authorization
-- Logging and monitoring
-- Docker image optimization using multi-stage builds
-- Kubernetes deployment
+- Version control with structured commits and branch management
+- Automated unit testing (**shift-left testing**)
+- Containerized deployment using Docker
+- Continuous Integration with GitHub Actions
+- Continuous Build & Deployment using Jenkins
+- Infrastructure as code (Dockerfile, Jenkinsfile, GitHub Actions YAML)
+
+---
+
+## Future Enhancements
+
+- Add persistent database (e.g., PostgreSQL or MongoDB)
+- Add authentication & authorization for API/dashboard
+- Input validation and error handling improvements
+- Logging and monitoring (ELK/Prometheus/Grafana)
+- Docker multi-stage builds for smaller images
+- Kubernetes deployment for production-scale orchestration
 
 ---
 
 ## Author
 
-Sarath Kumar S
+**Sarath Kumar S**
 M.Tech – Software Engineering
 BITS Pilani (WILP)
+
+GitHub: [https://github.com/2024TM93636](https://github.com/2024TM93636)
 
 ---
