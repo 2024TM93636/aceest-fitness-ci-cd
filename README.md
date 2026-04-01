@@ -5,7 +5,6 @@
 ![Flask](https://img.shields.io/badge/Flask-API-black)
 ![Docker](https://img.shields.io/badge/Docker-Container-blue)
 ![Pytest](https://img.shields.io/badge/Tests-Pytest-green)
-![Jenkins](http://localhost:8080/job/aceest-fitness-ci-cd/badge/icon)
 
 A Flask-based Fitness & Gym Management API demonstrating modern **DevOps practices**, including automated testing, Docker containerization, and CI/CD pipelines with **GitHub Actions** and **Jenkins**.
 
@@ -228,7 +227,6 @@ App --> User[End User]
 
 ## Dashboard Screenshot
 
-**Home Dashboard**  
 ![Home Dashboard](screenshots/dashboard.png)
 
 ---
@@ -257,8 +255,8 @@ App --> User[End User]
 
 ## Author
 
-**Sarath Kumar S**
-M.Tech – Software Engineering
+**Sarath Kumar S**  
+M.Tech – Software Engineering  
 BITS Pilani (WILP)
 
 GitHub: [https://github.com/2024TM93636](https://github.com/2024TM93636)
