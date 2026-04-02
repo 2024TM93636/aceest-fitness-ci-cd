@@ -10,6 +10,40 @@ A Flask-based Fitness & Gym Management API demonstrating modern **DevOps practic
 
 ---
 
+## Table of Contents
+
+- [Academic Context](#academic-context)
+- [Overview](#overview)
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Project Structure](#project-structure)
+- [API Endpoints](#api-endpoints)
+- [Local Setup](#local-setup)
+- [Running Tests](#running-tests)
+- [Docker Setup](#docker-setup)
+- [CI/CD Pipelines](#cicd-pipelines)
+- [Workflow Diagram](#cicd-workflow-diagram)
+- [Screenshots](#screenshots)
+- [DevOps Practices](#devops-practices-implemented)
+- [Future Enhancements](#future-enhancements)
+- [Author](#author)
+
+---
+
+## Academic Context
+
+This project is developed as part of the **Introduction to DevOps (SEZG514)** course at **BITS Pilani (WILP)**.
+
+It fulfills the assignment requirement of implementing a complete CI/CD pipeline integrating:
+
+- Version Control (GitHub)
+- Automated Testing (Pytest)
+- Containerization (Docker)
+- Continuous Integration (GitHub Actions)
+- Continuous Build & Deployment (Jenkins)
+
+---
+
 ## Overview
 
 This project implements a **complete DevOps lifecycle** for a fitness application:
@@ -22,6 +56,15 @@ This project implements a **complete DevOps lifecycle** for a fitness applicatio
 6. Continuous Build & Deployment via Jenkins
 
 The goal is to ensure **code quality, environmental consistency, and automated delivery**.
+
+---
+
+## Project Documentation
+
+A detailed project report (including architecture, CI/CD workflows, and explanations) is available below:
+
+📄 **Download Full Documentation:**  
+[ACEest DevOps Project Report](docs/ACEest_DevOps_Report.pdf)
 
 ---
 
@@ -191,17 +234,33 @@ Steps:
 
 ### Jenkins Pipeline (Build & Deployment)
 
+Jenkins acts as a **secondary build validation layer**.
+
 - Uses a **Docker agent** for environment consistency
 - Installs dependencies
 - Runs Pytest unit tests
 - Builds Docker image
 - Deploys the container to port 5000
 
+Jenkins pulls the latest code from GitHub and executes the pipeline in a clean environment.
+
 Ensures:
 
 - Code validation
 - Build reproducibility
 - Automated deployment to a local container
+
+---
+
+### CI/CD Integration
+
+GitHub Actions handles **Continuous Integration**, while Jenkins handles **Build and Deployment**, forming a complete CI/CD pipeline.
+
+This ensures:
+
+- Reliable builds
+- Automated deployment
+- Reduced manual effort
 
 ---
 
@@ -225,9 +284,23 @@ App --> User[End User]
 
 ---
 
-## Dashboard Screenshot
+## Screenshots
+
+### Home Dashboard
 
 ![Home Dashboard](screenshots/dashboard.png)
+
+### GitHub Actions Pipeline
+
+![GitHub Actions Pipeline](screenshots/github-actions.png)
+
+### Jenkins Pipeline
+
+![Jenkins Pipeline](screenshots/jenkins-pipeline.png)
+
+### Docker Container
+
+![Docker Container](screenshots/docker-desktop.png)
 
 ---
 
