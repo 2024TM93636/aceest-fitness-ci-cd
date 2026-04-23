@@ -105,6 +105,12 @@ def search_members():
 
     return jsonify(result)
 
+# ------------------ HEALTH CHECK ------------------
+
+@app.route("/api/health")
+def health():
+    return {"status": "ok"}
+
 # ------------------ RUN ------------------
 
 if __name__ == "__main__":
