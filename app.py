@@ -111,6 +111,15 @@ def search_members():
 def health():
     return {"status": "ok"}
 
+# ------------------ STATS ------------------
+
+@app.route("/api/stats")
+def stats():
+    return {
+        "total_members": len(members),
+        "total_workouts": len(workouts)
+    }
+
 # ------------------ RUN ------------------
 
 if __name__ == "__main__":
