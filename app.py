@@ -120,6 +120,10 @@ def stats():
         "total_workouts": len(workouts)
     }
 
+@app.route("/version")
+def version():
+    return {"version": "v1.2"}  # change per version
+
 # ------------------ RUN ------------------
 
 if __name__ == "__main__":
