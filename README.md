@@ -5,84 +5,68 @@
 ![Flask](https://img.shields.io/badge/Flask-API-black)
 ![Docker](https://img.shields.io/badge/Docker-Container-blue)
 ![Pytest](https://img.shields.io/badge/Tests-Pytest-green)
+![Kubernetes](https://img.shields.io/badge/Kubernetes-Orchestration-blue)
+![SonarQube](https://img.shields.io/badge/Code%20Quality-SonarQube-brightgreen)
 
-A Flask-based Fitness & Gym Management API demonstrating modern **DevOps practices**, including automated testing, Docker containerization, and CI/CD pipelines with **GitHub Actions** and **Jenkins**.
-
----
-
-## Table of Contents
-
-- [Academic Context](#academic-context)
-- [Overview](#overview)
-- [Features](#features)
-- [Tech Stack](#tech-stack)
-- [Project Structure](#project-structure)
-- [API Endpoints](#api-endpoints)
-- [Local Setup](#local-setup)
-- [Running Tests](#running-tests)
-- [Docker Setup](#docker-setup)
-- [CI/CD Pipelines](#cicd-pipelines)
-- [Workflow Diagram](#cicd-workflow-diagram)
-- [Screenshots](#screenshots)
-- [DevOps Practices](#devops-practices-implemented)
-- [Future Enhancements](#future-enhancements)
-- [Author](#author)
+A Flask-based Fitness & Gym Management API demonstrating modern **DevOps practices**, including CI/CD automation, containerization, Kubernetes deployment, and advanced deployment strategies.
 
 ---
 
-## Academic Context
+## 📚 Academic Context
 
 This project is developed as part of the **Introduction to DevOps (SEZG514)** course at **BITS Pilani (WILP)**.
 
-It fulfills the assignment requirement of implementing a complete CI/CD pipeline integrating:
+It fulfills the assignment requirement of implementing a **complete end-to-end CI/CD pipeline** with:
 
-- Version Control (GitHub)
-- Automated Testing (Pytest)
-- Containerization (Docker)
-- Continuous Integration (GitHub Actions)
-- Continuous Build & Deployment (Jenkins)
+- Version Control → Git & GitHub
+- CI → GitHub Actions
+- Build & CD → Jenkins
+- Testing → Pytest
+- Containerization → Docker
+- Orchestration → Kubernetes (Minikube)
+- Code Quality → SonarQube
 
 ---
 
-## Overview
+## 🚀 Overview
 
-This project implements a **complete DevOps lifecycle** for a fitness application:
+This project implements a **production-like DevOps lifecycle**:
 
-1. Local development with Python & Flask
-2. Version control using Git & GitHub
-3. Unit testing with Pytest
-4. Containerization with Docker
+1. Code development using Flask
+2. Version control and branching strategy
+3. Automated testing with Pytest
+4. Docker-based containerization
 5. Continuous Integration via GitHub Actions
 6. Continuous Build & Deployment via Jenkins
-
-The goal is to ensure **code quality, environmental consistency, and automated delivery**.
-
----
-
-## Project Documentation
-
-A detailed project report (including architecture, CI/CD workflows, and explanations) is available below:
-
-📄 **Download Full Documentation:**  
-[ACEest DevOps Project Report](docs/ACEest_DevOps_Report.pdf)
+7. Kubernetes-based deployment
+8. Advanced deployment strategies implementation
 
 ---
 
-## Features
+## 📄 Project Documentation
 
-- REST API for **managing gym members and workouts**
-- **CRUD operations**: Create, Read, Update, Delete members
-- Assign workouts to members
-- Search members by name
-- **Interactive web dashboard** (HTML + JS + CSS)
-- Fully **containerized application** with Docker
-- Automated **unit testing** with Pytest
-- **CI/CD pipelines** using GitHub Actions and Jenkins
-- Automated container **deployment** via Jenkins
+📄 **Full Report (Assignment Submission):**  
+[Download Report 1](docs/Report_1.pdf)
+[Download Report 2](docs/Report_2.pdf)
 
 ---
 
-## Tech Stack
+## ✨ Features
+
+- REST API for gym member & workout management
+- Full CRUD operations
+- Workout assignment to members
+- Member search functionality
+- Interactive web dashboard
+- Automated testing using Pytest
+- Dockerized application
+- CI/CD pipelines (GitHub Actions + Jenkins)
+- Kubernetes deployment
+- Advanced deployment strategies
+
+---
+
+## 🧰 Tech Stack
 
 | Category         | Technology              |
 | ---------------- | ----------------------- |
@@ -91,245 +75,248 @@ A detailed project report (including architecture, CI/CD workflows, and explanat
 | Testing          | Pytest                  |
 | Containerization | Docker                  |
 | CI/CD            | GitHub Actions, Jenkins |
+| Orchestration    | Kubernetes (Minikube)   |
+| Code Quality     | SonarQube               |
 | Version Control  | Git, GitHub             |
 
 ---
 
-## Project Structure
+## 📁 Project Structure
 
 ```
+
 aceest-fitness-ci-cd/
 │
-├── app.py                  # Flask API logic
-├── requirements.txt        # Python dependencies
-├── Dockerfile              # Docker container configuration
-├── Jenkinsfile             # Jenkins CI/CD pipeline
-├── README.md
+├── app.py
+├── Dockerfile
+├── Jenkinsfile
+├── requirements.txt
+├── sonar-project.properties
 │
-├── static/
-│   └── style.css           # Dashboard styling
-├── templates/
-│   └── index.html          # Dashboard HTML
+├── deployment.yaml
+├── service.yaml
+├── deployment-blue.yaml
+├── deployment-green.yaml
+├── canary.yaml
 │
 ├── tests/
-│   └── test_app.py         # Pytest unit tests
+├── templates/
+├── static/
 │
-└── .github/
-    └── workflows/
-        └── ci.yml          # GitHub Actions CI workflow
+└── .github/workflows/ci.yml
+
 ```
 
 ---
 
-## API Endpoints
-
-### Home
-
-```
-GET /
-```
-
-Renders the **web dashboard**.
-
----
+## 🔗 API Endpoints
 
 ### Members
 
-| Method | Endpoint                    | Description            |
-| ------ | --------------------------- | ---------------------- |
-| GET    | `/api/members`              | List all members       |
-| GET    | `/api/members/<member_id>`  | Get a member by ID     |
-| POST   | `/api/members`              | Add a new member       |
-| PUT    | `/api/members/<member_id>`  | Update member details  |
-| DELETE | `/api/members/<member_id>`  | Delete a member        |
-| GET    | `/api/members/search?name=` | Search members by name |
+| Method | Endpoint            | Description  |
+| ------ | ------------------- | ------------ |
+| GET    | `/api/members`      | List members |
+| POST   | `/api/members`      | Add member   |
+| PUT    | `/api/members/<id>` | Update       |
+| DELETE | `/api/members/<id>` | Delete       |
 
 ---
 
-### Workouts
+## ⚙️ Local Setup
 
-| Method | Endpoint                                       | Description                  |
-| ------ | ---------------------------------------------- | ---------------------------- |
-| GET    | `/api/workouts`                                | List all workouts            |
-| POST   | `/api/workouts`                                | Add a new workout            |
-| POST   | `/api/members/<member_id>/assign/<workout_id>` | Assign a workout to a member |
-
----
-
-## Local Setup
-
-### 1. Clone Repository
-
-```
+```bash
 git clone https://github.com/2024TM93636/aceest-fitness-ci-cd.git
 cd aceest-fitness-ci-cd
-```
-
-### 2. Install Dependencies
-
-```
 pip install -r requirements.txt
-```
-
-### 3. Run Application
-
-```
 python app.py
 ```
 
-Access the dashboard:
-
-```
-http://localhost:5000
-```
-
 ---
 
-## Running Tests
+## 🧪 Running Tests
 
-```
+```bash
 pytest
 ```
 
-- All unit tests are located in `tests/test_app.py`
-- Tests cover **members CRUD**, **workouts CRUD**, **assignment**, and **search**.
+---
+
+## 🐳 Docker Setup
+
+```bash
+docker build -t sarath93636/aceest-gym:v1.0 .
+docker run -d -p 5000:5000 aceest-gym
+```
 
 ---
 
-## Docker Setup
+## 🔄 CI/CD Pipelines
 
-### Build Image
+### GitHub Actions (CI)
 
-```
-docker build -t aceest-gym .
-```
-
-### Run Container
-
-```
-docker run -d -p 5000:5000 --name aceest-container aceest-gym
-```
-
-- Stops and removes the container automatically if redeployed via Jenkins.
-
----
-
-## CI/CD Pipelines
-
-### GitHub Actions (Continuous Integration)
-
-Triggered on every push or pull request to `main`.
-
-Steps:
-
-1. Checkout repository
-2. Set up Python environment
-3. Install dependencies
-4. Run Pytest for automated testing
-5. Build Docker image
-
-**Status badge** above shows the latest CI run.
-
----
-
-### Jenkins Pipeline (Build & Deployment)
-
-Jenkins acts as a **secondary build validation layer**.
-
-- Uses a **Docker agent** for environment consistency
-- Installs dependencies
-- Runs Pytest unit tests
+- Runs on every push
+- Executes tests
 - Builds Docker image
-- Deploys the container to port 5000
 
-Jenkins pulls the latest code from GitHub and executes the pipeline in a clean environment.
+### Jenkins (CD)
 
-Ensures:
-
-- Code validation
-- Build reproducibility
-- Automated deployment to a local container
+- Pulls latest code
+- Runs tests
+- Builds Docker image
+- Deploys container
 
 ---
 
-### CI/CD Integration
+## ☸️ Kubernetes Deployment
 
-GitHub Actions handles **Continuous Integration**, while Jenkins handles **Build and Deployment**, forming a complete CI/CD pipeline.
+### Start Cluster
 
-This ensures:
+```bash
+minikube start
+```
 
-- Reliable builds
-- Automated deployment
-- Reduced manual effort
+### Deploy Application
+
+```bash
+kubectl apply -f deployment.yaml
+kubectl apply -f service.yaml
+```
+
+### Access App
+
+```bash
+minikube service aceest-service
+```
 
 ---
 
-## CI/CD Workflow Diagram
+## 🚀 Deployment Strategies Implemented
+
+### 🔹 Rolling Update
+
+Gradual pod updates with zero downtime
+
+### 🔹 Blue-Green Deployment
+
+Two environments (Blue & Green) with traffic switching
+
+### 🔹 Canary Deployment
+
+Small traffic routed to new version
+
+### 🔹 A/B Testing
+
+Multiple versions exposed to users
+
+### 🔹 Shadow Deployment
+
+New version runs in parallel without affecting users
+
+---
+
+## 📊 SonarQube Code Quality
+
+- Static code analysis performed
+- Quality gates applied
+- Metrics:
+  - Bugs
+  - Vulnerabilities
+  - Code Smells
+  - Coverage
+
+---
+
+## 📈 CI/CD Workflow Diagram
 
 ```mermaid
 flowchart LR
 
-Dev[Developer] -->|Push Code| GH[GitHub]
+Dev[Developer] -->|Code Commit| GitHub[GitHub Repository]
 
-GH --> GA[GitHub Actions CI]
-GA --> Test[Run Tests]
-GA --> Build[Build Docker Image]
+GitHub -->|Trigger| GHA[GitHub Actions CI]
+GHA --> Install[Install Dependencies]
+Install --> Test[Run Pytest]
+Test --> Build[Build Docker Image]
 
-GH --> Jenkins[Jenkins Pipeline]
-Jenkins --> Deploy[Deploy Container]
+GitHub -->|Webhook Trigger| Jenkins[Jenkins Pipeline]
+Jenkins --> JBuild[Build Stage]
+JBuild --> JTest[Test Stage]
+JTest --> JDocker[Docker Build and Tag]
 
-Deploy --> App[Flask App Running]
-App --> User[End User]
+JDocker --> Registry[Docker Hub Repository]
+
+Registry --> K8s[Kubernetes Cluster Minikube]
+
+K8s --> Rolling[Rolling Update]
+K8s --> BlueGreen[Blue Green Deployment]
+K8s --> Canary[Canary Deployment]
+K8s --> AB[AB Testing]
+K8s --> Shadow[Shadow Deployment]
+
+GitHub --> Sonar[SonarQube Analysis]
+Sonar --> Quality[Quality Gate Passed]
+
+K8s --> App[Flask Application Running]
+App --> User[End User Access]
 ```
 
 ---
 
-## Screenshots
+## 📸 Screenshots
 
-### Home Dashboard
+### Dashboard
 
-![Home Dashboard](screenshots/dashboard.png)
+![Dashboard](screenshots/dashboard.png)
 
-### GitHub Actions Pipeline
+### GitHub Actions
 
-![GitHub Actions Pipeline](screenshots/github-actions.png)
-
-### Jenkins Pipeline
-
-![Jenkins Pipeline](screenshots/jenkins-pipeline.png)
+![GitHub Actions](screenshots/github-actions.png)
 
 ### Docker Container
 
 ![Docker Container](screenshots/docker-desktop.png)
 
+### Jenkins
+
+![Jenkins](screenshots/jenkins-pipeline.png)
+
+### Kubernetes Pods
+
+![K8s](screenshots/running-pod-and-service.png)
+
+### Docker Hub
+
+![Docker Hub](screenshots/docker-hub.png)
+
+### SonarQube
+
+## ![SonarQube](screenshots/sonarqube.png)
+
+## 🛠 DevOps Practices Implemented
+
+- CI/CD automation
+- Shift-left testing
+- Infrastructure as Code
+- Containerized deployments
+- Multi-version deployment strategies
+- Code quality enforcement
+
 ---
 
-## DevOps Practices Implemented
+## 🔮 Future Enhancements
 
-- Version control with structured commits and branch management
-- Automated unit testing (**shift-left testing**)
-- Containerized deployment using Docker
-- Continuous Integration with GitHub Actions
-- Continuous Build & Deployment using Jenkins
-- Infrastructure as code (Dockerfile, Jenkinsfile, GitHub Actions YAML)
-
----
-
-## Future Enhancements
-
-- Add persistent database (e.g., PostgreSQL or MongoDB)
-- Add authentication & authorization for API/dashboard
-- Input validation and error handling improvements
-- Logging and monitoring (ELK/Prometheus/Grafana)
-- Docker multi-stage builds for smaller images
-- Kubernetes deployment for production-scale orchestration
+- Kubernetes production deployment
+- Monitoring (Prometheus/Grafana)
+- Logging (ELK Stack)
+- Authentication system
+- Database integration
 
 ---
 
-## Author
+## 👨‍💻 Author
 
-**Sarath Kumar S**  
-M.Tech – Software Engineering  
+**Sarath Kumar S**
+M.Tech – Software Engineering
 BITS Pilani (WILP)
 
 GitHub: [https://github.com/2024TM93636](https://github.com/2024TM93636)
